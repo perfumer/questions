@@ -1,0 +1,7 @@
+<phpunit backupGlobals="false" beStrictAboutTestsThatDoNotTestAnything="false">
+    <testsuites>
+        <testsuite name="Questions">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

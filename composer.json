@@ -1,0 +1,36 @@
+{
+  "name": "perfumer/questions",
+  "type": "library",
+  "description": "Parse questions form yaml files",
+  "homepage": "https://github.com/perfumer/questions",
+  "authors": [
+    {
+      "name": "Ilyas Makashev",
+      "email": "mehmatovec@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "symfony/yaml": "~5"
+  },
+  "require-dev": {
+    "filp/whoops": "~2",
+    "perfumerlabs/perfumer": "v0.1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Perfumer\\Questions\\": "src/",
+      "Generated\\Perfumer\\Questions\\": "generated/src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Generated\\Annotation\\": "generated/annotation/",
+      "Generated\\Tests\\Perfumer\\Questions\\": "generated/tests/",
+      "Tests\\Perfumer\\Questions\\": "tests/"
+    }
+  },
+  "config": {
+    "preferred-install": "dist"
+  }
+}
