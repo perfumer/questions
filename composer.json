@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "symfony/yaml": "~5"
+    "symfony/yaml": "~5|~4|~3"
   },
   "require-dev": {
     "filp/whoops": "~2",
