@@ -82,6 +82,7 @@ class QuestionsContextTest extends \Generated\Tests\Perfumer\Questions\Context\Q
                     'id' => 1,
                     'text' => 'foo bar',
                     'type' => 'checkbox',
+                    'custom_text' => true,
                     'answers' => [
                         [
                             'id' => 1,
@@ -108,7 +109,6 @@ class QuestionsContextTest extends \Generated\Tests\Perfumer\Questions\Context\Q
                         ],
                         [
                             'id' => 0,
-                            'custom_text' => true,
                         ],
                     ]
                 ]

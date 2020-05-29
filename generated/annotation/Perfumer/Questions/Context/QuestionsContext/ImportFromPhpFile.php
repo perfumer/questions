@@ -6,7 +6,7 @@ namespace Generated\Annotation\Perfumer\Questions\Context\QuestionsContext;
  * @Annotation
  * @Target({"CLASS", "METHOD", "ANNOTATION"})
  */
-class ExportToPhpFile extends \Perfumerlabs\Perfumer\ContractAnnotation\SharedClassCall
+class ImportFromPhpFile extends \Perfumerlabs\Perfumer\ContractAnnotation\SharedClassCall
 {
     /**
      * @var string
@@ -29,26 +29,6 @@ class ExportToPhpFile extends \Perfumerlabs\Perfumer\ContractAnnotation\SharedCl
     public $filename = null;
 
     /**
-     * @var string
-     */
-    public $in_questions = null;
-
-    /**
-     * @var string
-     */
-    public $questions = null;
-
-    /**
-     * @var string
-     */
-    public $in_links = null;
-
-    /**
-     * @var string
-     */
-    public $links = null;
-
-    /**
      * @var mixed
      */
     public $out = null;
@@ -56,7 +36,7 @@ class ExportToPhpFile extends \Perfumerlabs\Perfumer\ContractAnnotation\SharedCl
     public function onCreate(): void
     {
         $this->_class = 'Perfumer\\Questions\\Context\\QuestionsContext';
-        $this->_method = 'exportToPhpFile';
+        $this->_method = 'importFromPhpFile';
         $this->_return = $this->out;
 
         parent::onCreate();
@@ -76,18 +56,6 @@ class ExportToPhpFile extends \Perfumerlabs\Perfumer\ContractAnnotation\SharedCl
             $in_filename = 'filename';
         }
 
-        $in_questions = $this->in_questions ?: $this->questions;
-
-        if (!$in_questions) {
-            $in_questions = 'questions';
-        }
-
-        $in_links = $this->in_links ?: $this->links;
-
-        if (!$in_links) {
-            $in_links = 'links';
-        }
-
         $this->_arguments = [];
 
         if (is_string($in_php_dir)) {
@@ -96,14 +64,6 @@ class ExportToPhpFile extends \Perfumerlabs\Perfumer\ContractAnnotation\SharedCl
 
         if (is_string($in_filename)) {
             $this->_arguments[] = $in_filename;
-        }
-
-        if (is_string($in_questions)) {
-            $this->_arguments[] = $in_questions;
-        }
-
-        if (is_string($in_links)) {
-            $this->_arguments[] = $in_links;
         }
 
         parent::onAnalyze();

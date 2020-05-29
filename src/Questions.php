@@ -34,8 +34,9 @@ class Questions extends \Generated\Perfumer\Questions\Questions
 
         foreach ($files as $file) {
             $questions = $this->importFromYamlFile($file);
+            $array = $context->convertQuestions($questions);
 
-            $context->exportToPhpFile($this->php_dir, $file, $questions);
+            $context->exportToPhpFile($this->php_dir, $file, $array['questions'], $array['links']);
         }
     }
 
@@ -46,5 +47,31 @@ class Questions extends \Generated\Perfumer\Questions\Questions
         $id_generator->generateInitialIndex();
 
         return $context->buildQuestionsFromYamlFile($this->yaml_dir, $file, $id_generator);
+    }
+
+    public function getNextQuestion(string $file, ?int $question_id, array $answer = [], array $chain = [])
+    {
+        $context = new QuestionsContext();
+
+        $reference = $context->importFromPhpFile($this->php_dir, $file);
+
+        if (!is_int($question_id) || $question_id <= 0) {
+            return [reset($reference['questions']), []];
+        }
+
+        $choices = $answer['choices'] ?? [];
+        $custom = $answer['custom'] ?? false;
+
+        $links = $context->getLinks($question_id, $choices, $custom);
+
+        $ordered_questions = $context->getOrderedQuestions($reference, $links, $chain);
+
+        if (!$ordered_questions) {
+            return [null, []];
+        }
+
+        $next_question = $context->getNextQuestion($reference, $ordered_questions);
+
+        return $next_question;
     }
 }
