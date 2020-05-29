@@ -3,6 +3,7 @@
 namespace Perfumer\Questions;
 
 use Perfumer\Questions\Context\QuestionsContext;
+use Perfumer\Questions\Helper\Arr;
 
 class Questions extends \Generated\Perfumer\Questions\Questions
 {
@@ -49,14 +50,21 @@ class Questions extends \Generated\Perfumer\Questions\Questions
         return $context->buildQuestionsFromYamlFile($this->yaml_dir, $file, $id_generator);
     }
 
-    public function getNextQuestion(string $file, ?int $question_id, array $answer = [], array $chain = [])
+    public function getNextQuestion(string $file, ?int $question_id, array $answer = [], array $chain = []): NextQuestion
     {
         $context = new QuestionsContext();
+        $response = new NextQuestion();
 
         $reference = $context->importFromPhpFile($this->php_dir, $file);
 
+        if (!$reference || !is_array($reference['questions']) || !isset($reference['questions'])) {
+            return $response;
+        }
+
         if (!is_int($question_id) || $question_id <= 0) {
-            return [reset($reference['questions']), []];
+            $response->question = reset($reference['questions']);
+
+            return $response;
         }
 
         $choices = $answer['choices'] ?? [];
@@ -67,11 +75,24 @@ class Questions extends \Generated\Perfumer\Questions\Questions
         $ordered_questions = $context->getOrderedQuestions($reference, $links, $chain);
 
         if (!$ordered_questions) {
-            return [null, []];
+            return $response;
         }
 
-        $next_question = $context->getNextQuestion($reference, $ordered_questions);
+        $response->question = $context->getNextQuestion($reference, $ordered_questions);
 
-        return $next_question;
+        return $response;
+    }
+
+    public function getQuestionsById(string $file, array $ids): array
+    {
+        $context = new QuestionsContext();
+
+        $reference = $context->importFromPhpFile($this->php_dir, $file);
+
+        if (!$reference || !is_array($reference['questions']) || !isset($reference['questions'])) {
+            return [];
+        }
+
+        return Arr::fetch($reference['questions'], $ids);
     }
 }
