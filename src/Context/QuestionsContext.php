@@ -263,19 +263,6 @@ class QuestionsContext
     }
 
     /**
-     * @param array $reference
-     * @param array $questions
-     * @return array
-     */
-    public function getNextQuestion(array $reference, array $questions): array
-    {
-        return [
-            $reference['questions'][$questions[0]],
-            array_slice($questions, 1)
-        ];
-    }
-
-    /**
      * @param array $array
      * @return array
      */
