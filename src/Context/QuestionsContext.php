@@ -315,10 +315,6 @@ class QuestionsContext
 
                     unset($rows[0]['answers'][$i]['then']);
                 }
-
-                if (!isset($answer['text'])) {
-                    unset($rows[0]['answers'][$i]);
-                }
             }
         }
 

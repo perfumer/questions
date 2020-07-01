@@ -78,7 +78,17 @@ class Questions extends \Generated\Perfumer\Questions\Questions
             return $response;
         }
 
-        $response->question = $reference['questions'][$ordered_questions[0]];
+        $next_question = $reference['questions'][$ordered_questions[0]];
+
+        if (isset($next_question['answers']) && is_array($next_question['answers'])) {
+            foreach ($next_question['answers'] as $i => $next_question_answer) {
+                if (!isset($next_question_answer['text'])) {
+                    unset($next_question['answers'][$i]);
+                }
+            }
+        }
+
+        $response->question = $next_question;
         $response->chain = array_slice($ordered_questions, 1);
 
         return $response;
